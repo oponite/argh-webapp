@@ -1,0 +1,31 @@
+html, body {
+
+  overflow-x: hidden;
+  overflow-y: visible; /* ensure vertical shadows can show */
+
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #33091B;
+}
+
+/* Let the page flow: header on top, main below */
+body {
+  min-height: 100vh;
+}
+
+
+/* Center only the main content, not the header */
+main {
+  min-height: calc(100vh - 64px); /* approx header height */
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+
+h1 {
+  color: white;
+  text-align: center;
+  padding-top: 2rem;
+}
