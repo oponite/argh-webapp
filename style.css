@@ -1,4 +1,17 @@
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-style: italic;
+}
+
 html, body {
+  font-family: 'Roboto', sans-serif;
   overflow-x: hidden;
   overflow-y: visible; /* ensure vertical shadows can show */
 

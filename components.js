@@ -47,9 +47,10 @@ navTemplate.innerHTML = `
 
       color: white;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: normal;
       letter-spacing: 0.2px;
       opacity: 0.92;
+      font-size: 0.85rem;
     }
 
     a:hover {
