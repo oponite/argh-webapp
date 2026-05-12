@@ -1,6 +1,6 @@
-
-// Template for <nav-header> instances
-
+/***
+ Template for <nav-header> instances
+ ***/
 const navTemplate = document.createElement('template');
 navTemplate.innerHTML = `
   <style>
@@ -61,50 +61,79 @@ navTemplate.innerHTML = `
   <nav></nav>
 `;
 
-
-/* Define the <nav-header> custom element */
+// Define the <nav-header> custom element
 class NavHeader extends HTMLElement {
   connectedCallback() {
-
-    /* connectedCallback() can run more than once if the element is
-       removed/re-added. This guard prevents duplicating the UI. */
-
-    if (this._initialized) return;
-    this._initialized = true;
-
-
     /* Create Shadow DOM so:
-       - :host works
-       - styles are encapsulated (won’t leak to the page)
-       - page styles won’t accidentally break the header */
-
+       - styling of elements is encapsulated
+       - templates can be cloned for use */
     const shadow = this.attachShadow({ mode: 'open' });
-
-
-    /* Clone the template content and attach it to this instance’s Shadow DOM */
     shadow.appendChild(navTemplate.content.cloneNode(true));
 
-
-    /* Get the <nav> inside Shadow DOM where we'll insert the generated links */
-
     const nav = shadow.querySelector('nav');
+    // Defining all links here for easy instantiation
+    const links = [
+      { href: 'http://150.136.95.244/', text: 'Home' },
+      { href: '/pages/net_worth.html', text: 'Money' },
+      { href: '/pages/about.html', text: 'About' },
+    ];
 
-    // /* Read <nav-link> elements placed inside <nav-header> in your HTML.
-    //        These are "placeholder" elements that store href + label. */
-    this.querySelectorAll('nav-link').forEach(link => {
+    links.forEach(link => {
       const a = document.createElement('a');
-      a.href = link.getAttribute('href');
-      a.textContent = link.textContent;
+      a.href = link.href;
+      a.textContent = link.text;
       nav.appendChild(a);
     });
 
-
-    /* Remove placeholder markup so it doesn't show up as plain text
-       and avoids duplicates in the light DOM. */
-    this.innerHTML = "";
   }
 }
 
 
-/* Register the custom element so <nav-header> works in HTML */
+/***
+ Template for <card-component> instances
+ ***/
+const cardTemplate = document.createElement('template');
+cardTemplate.innerHTML = `
+  <style>
+    :host {
+      display: block;
+      max-width: 360px;
+    }
+
+    .card {
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgb(173, 165, 165);
+      color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      height: 100%;  
+      width: 100%;
+    }
+
+    /* --- Slots will go here in a later step --- */
+  </style>
+
+  <div class="card">
+    <!-- card content will be injected here -->
+  </div>
+`;
+
+/* Define the <card-component> custom element */
+class CardComponent extends HTMLElement {
+  connectedCallback() {
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.appendChild(cardTemplate.content.cloneNode(true));
+
+    // Read size attributes and apply them to the host element
+    const width = this.getAttribute('width');
+    const height = this.getAttribute('height');
+
+    if (width) this.style.width = width;
+    if (height) this.style.height = height;
+  }
+}
+
+
+/* Register all custom elements so they can be used in HTML */
 customElements.define('nav-header', NavHeader);
+customElements.define('card-component', CardComponent);
